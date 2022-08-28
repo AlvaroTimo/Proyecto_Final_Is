@@ -18,6 +18,17 @@ controller.insertar = (req, res) => {
     if (err) {
       console.log("No se pudo conectar a la base de datos");
     }
+    else if(!req.body.nombre || !req.body.fecha ||!req.body.hora || !req.body.lugar){
+      res.render('home', {
+        alert: true,
+        alertTitle: "Error",
+        alertMessage: "Datos llenados incorrectamente",
+        alertIcon:'error',
+        showConfirmButton: true,
+        timer: 2000,
+        ruta: ''
+      });
+    }
     conn.query('CALL msp_insertarEvento(?,?,?,?)', [req.body.nombre,req.body.fecha,req.body.hora,req.body.lugar], (err, resultados) => {
         if (err) {
             res.json(err);
@@ -70,7 +81,17 @@ controller.actualizar = (req, res) => {
       if (err) {
         console.log("No se pudo conectar a la base de datos");
       }
-
+      else if(!req.body.nombre || !req.body.fecha ||!req.body.hora || !req.body.lugar){
+        res.render('home', {
+          alert: true,
+          alertTitle: "Error",
+          alertMessage: "Datos llenados incorrectamente",
+          alertIcon:'error',
+          showConfirmButton: true,
+          timer: 2000,
+          ruta: ''
+        });
+      }
       conn.query('CALL msp_actualizarEvento(?,?,?,?)',[req.body.nombre,req.body.fecha,req.body.hora,req.body.lugar], (err, resultados) => {
           if (err) {
               res.json(err);
