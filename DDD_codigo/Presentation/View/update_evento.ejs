@@ -1,0 +1,29 @@
+
+<%- include ('partials/_header')  %>
+<section class="container">
+    <div class="row mt-5">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="/products/update/<%=data.id%>">
+                        <div class="form-group">
+                            <input type="text" placeholder="Nombre" name="nombre" class="form-control" value="<%=data.nombre%>"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" placeholder="fecha" name="fecha" class="form-control" value="<%=data.costo%>"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="hora" name="hora" class="form-control" value="<%=data.descripcion%>"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="lugar" name="lugar" class="form-control" value="<%=data.cantidad%>"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include ('partials/_footer')  %>
