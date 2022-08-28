@@ -39,5 +39,4 @@ class Administrador{
     establecerContraseña(contraseña){
         this.contraseña=contraseña;
     }
-
 }

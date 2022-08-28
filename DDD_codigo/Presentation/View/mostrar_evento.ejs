@@ -1,0 +1,45 @@
+<%- include ('partials/_header') %>
+<section class="container">
+  <div class="row mt-5">
+      <div class="col-md-7">
+          <table class="table table-bordered table-hover">
+              <thead>
+                  <tr>
+                      <td>N°</td>
+                      <td>Nombre</td>
+                      <td>Fecha</td>
+                      <td>Hora</td>
+                      <td>Lugar</td>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  <% if (data) { %>
+                      <% for(var i = 0; i < data.length; i++) { %>
+                          <tr>
+                              <td>
+                                  <%= i+1 %>
+                              </td>
+                              <td>
+                                  <%= data[i].nombre %>
+                              </td>
+                              <td>
+                                <%= data[i].fecha %>
+                            </td>
+                              <td>
+                                <%= data[i].hora %>
+                              </td>
+                              <td>
+                                <%= data[i].lugar %>
+                              </td>
+                          </tr>
+                      <% } %>
+                  <% } %>
+
+
+              </tbody>
+          </table>
+      </div>
+  </div>
+</section>
+<%- include ('partials/_footer')  %>
