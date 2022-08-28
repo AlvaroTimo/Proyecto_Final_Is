@@ -12,336 +12,34 @@ Codigo:
 var controller = {};
 
 controller.mostrar = (req, res) => {
-  req.getConnection((err, conn) => {
-    conn.query('CALL msp_mostrarAdministrador()', (err, customers) => {
-        if (err) {
-            res.json(err);
-        }
-        res.render('show_admins', {
-            data: customers[0]
-        });
-    })
-  });
+  ...
 };
 
 controller.insertar = (req, res) => {
-  req.getConnection((err, conn) => {
-    if (err) {
-      console.log("No se pudo conectar a la base de datos");
-    }
-    else if(!req.body.nombre || !req.body.apellido ||!req.body.telefono || !req.body.nombreUsuario || !req.body.contraseña){
-      res.render('home', {
-        alert: true,
-        alertTitle: "Error",
-        alertMessage: "Datos llenados incorrectamente",
-        alertIcon:'error',
-        showConfirmButton: true,
-        timer: 2000,
-        ruta: ''
-      });
-    }
-    conn.query('CALL msp_insertarAdministrador(?,?,?,?,?)', [req.body.nombre,req.body.apellido,req.body.telefono,req.body.nombreUsuario,req.body.contraseña], (err, resultados) => {
-        if (err) {
-            res.json(err);
-            res.end();
-        }
-        res.render('home', {
-          alert: true,
-          alertTitle: "Conexion exitosa",
-          alertMessage: "Te has registrado correctamente",
-          alertIcon:'success',
-          showConfirmButton: false,
-          timer: 1500,
-          ruta: ''
-        });
-    })
-  });
+  ...
 };
 controller.llenarDatos = (req, res) => {
-  if (req.session.loggedin) {
-    req.getConnection((err, conn) => {
-      if (err) {
-        console.log("No se pudo conectar a la base de datos");
-      }
-      conn.query('CALL msp_buscarAdministrador(?)',[req.session.id], (err, resultados) => {
-          if (err) {
-              res.json(err);
-              res.end();
-          }
-          res.render('update_admin', {
-            data:resultados[0][0]
-          });
-      })
-    });
-  }
-  else{
-    res.render('home', {
-      alert: true,
-      alertTitle: "Error",
-      alertMessage: "Debes loguearte",
-      alertIcon:'error',
-      showConfirmButton: true,
-      timer: 2000,
-      ruta: ''
-    });
-  }
+  ...
 };
 controller.actualizar = (req, res) => {
-  if (req.session.loggedin) {
-    req.getConnection((err, conn) => {
-      if (err) {
-        console.log("No se pudo conectar a la base de datos");
-      }
-      else if(!req.body.nombre || !req.body.apellido ||!req.body.telefono || !req.body.nombreUsuario || !req.body.contraseña){
-        res.render('home', {
-          alert: true,
-          alertTitle: "Error",
-          alertMessage: "Datos llenados incorrectamente",
-          alertIcon:'error',
-          showConfirmButton: true,
-          timer: 2000,
-          ruta: ''
-        });
-      }
-      conn.query('CALL msp_actualizarAdministrador(?,?,?,?,?)',[req.body.nombre,req.body.apellido,req.body.telefono,req.body.nombreUsuario,req.body.contraseña], (err, resultados) => {
-          if (err) {
-              res.json(err);
-              res.end();
-          }
-          conn.query('CALL msp_buscarAdministrador(?)',[req.session.id],(err,resultados)=>{
-            if (err) {
-              res.json(err);
-              res.end();
-            }
-            res.render('update_admin', {
-              data:resultados[0][0],
-              alert: true,
-              alertTitle: "Cambio exitoso",
-              alertMessage: "Se realizo la actualizacion correctamente",
-              alertIcon:'success',
-              showConfirmButton: true,
-              timer: 2000,
-              ruta: `admins/update/${req.session.id}`
-            });
-          });
-      })
-    });
-  }
-  else{
-    res.render('home', {
-      alert: true,
-      alertTitle: "Error",
-      alertMessage: "Debes loguearte",
-      alertIcon:'error',
-      showConfirmButton: true,
-      timer: 2000,
-      ruta: ''
-    });
-  }
+  ...
 };
 
 module.exports = controller;
 ```
 
-``` javascript
-const controller = {};
-
-controller.mostrar = (req, res) => {
-  req.getConnection((err, conn) => {
-    conn.query('CALL msp_mostrarPonente()', (err, customers) => {
-        if (err) {
-            res.json(err);
-        }
-        res.render('show_ponentes', {
-            data: customers[0]
-        });
-    })
-  });
-};
-
-controller.insertar = (req, res) => {
-  req.getConnection((err, conn) => {
-    if (err) {
-      console.log("No se pudo conectar a la base de datos");
-    }
-    else if(!req.body.nombre || !req.body.apellido ||!req.body.especialidad || !req.body.nombreUsuario || !req.body.contraseña){
-      res.render('home', {
-        alert: true,
-        alertTitle: "Error",
-        alertMessage: "Datos llenados incorrectamente",
-        alertIcon:'error',
-        showConfirmButton: true,
-        timer: 2000,
-        ruta: ''
-      });
-    }
-    conn.query('CALL msp_insertarPonente(?,?,?,?,?,?)', [req.body.nombre,req.body.apellido,req.body.especialidad,req.body.nombreUsuario,req.body.contraseña], (err, resultados) => {
-        if (err) {
-            res.json(err);
-            res.end();
-        }
-        res.render('home', {
-          alert: true,
-          alertTitle: "Conexion exitosa",
-          alertMessage: "Te has registrado correctamente",
-          alertIcon:'success',
-          showConfirmButton: false,
-          timer: 1500,
-          ruta: ''
-        });
-    })
-  });
-};
-controller.llenarDatos = (req, res) => {
-  if (req.session.loggedin) {
-    req.getConnection((err, conn) => {
-      if (err) {
-        console.log("No se pudo conectar a la base de datos");
-      }
-      conn.query('CALL msp_buscarPonente(?)',[req.session.id], (err, resultados) => {
-          if (err) {
-              res.json(err);
-              res.end();
-          }
-          res.render('update_ponente', {
-            data:resultados[0][0]
-          });
-      })
-    });
-  }
-  else{
-    res.render('home', {
-      alert: true,
-      alertTitle: "Error",
-      alertMessage: "Debes loguearte",
-      alertIcon:'error',
-      showConfirmButton: true,
-      timer: 2000,
-      ruta: ''
-    });
-  }
-};
-controller.actualizar = (req, res) => {
-  if (req.session.loggedin) {
-    req.getConnection((err, conn) => {
-      if (err) {
-        console.log("No se pudo conectar a la base de datos");
-      }
-      else if(!req.body.nombre || !req.body.apellido ||!req.body.especialidad || !req.body.nombreUsuario || !req.body.contraseña){
-        res.render('home', {
-          alert: true,
-          alertTitle: "Error",
-          alertMessage: "Datos llenados incorrectamente",
-          alertIcon:'error',
-          showConfirmButton: true,
-          timer: 2000,
-          ruta: ''
-        });
-      }
-      conn.query('CALL msp_actualizarPonente(?,?,?,?,?)',[req.body.nombre,req.body.apellido,req.body.especialidad,req.body.nombreUsuario,req.body.contraseña], (err, resultados) => {
-          if (err) {
-              res.json(err);
-              res.end();
-          }
-          conn.query('CALL msp_buscarPonente(?)',[req.session.id],(err,resultados)=>{
-            if (err) {
-              res.json(err);
-              res.end();
-            }
-            res.render('update_ponente', {
-              data:resultados[0][0],
-              alert: true,
-              alertTitle: "Cambio exitoso",
-              alertMessage: "Se realizo la actualizacion correctamente",
-              alertIcon:'success',
-              showConfirmButton: true,
-              timer: 2000,
-              ruta: `ponentes/update/${req.session.id}`
-            });
-          });
-      })
-    });
-  }
-  else{
-    res.render('home', {
-      alert: true,
-      alertTitle: "Error",
-      alertMessage: "Debes loguearte",
-      alertIcon:'error',
-      showConfirmButton: true,
-      timer: 2000,
-      ruta: ''
-    });
-  }
-};
-
-module.exports = controller;
-```
 ```javascript
 const controller = {};
 
 controller.autenticar = (req, res) => {
-  req.getConnection((err, conn) => {
-    conn.query('SELECT * FROM Usuario WHERE usuario = ?',[req.body.user], (err, resultados) => {
-        if (err) {
-            res.json(err);
-        }
-        if(resultados.length==0 || req.body.password!=resultados[0].contrasena){
-          res.render('home', {
-            alert: true,
-            alertTitle: "Error",
-            alertMessage: "USUARIO y/o PASSWORD incorrectas",
-            alertIcon:'error',
-            showConfirmButton: true,
-            timer: false,
-            ruta: ''
-          });
-        }
-        else{
-          const _id= resultados[0].id;
-          conn.query('SELECT * FROM Administrador a INNER JOIN Usuario p ON a.id=p.id WHERE p.id = ?',[_id], (err, resultados)=>{
-            if(resultados.length==0){
-              req.session.loggedin = true;
-              req.session.name = "cliente";
-              req.session.id = _id;
-              res.render('home', {
-                alert: true,
-                alertTitle: "Conexión exitosa",
-                alertMessage: "¡LOGIN CORRECTO!",
-                alertIcon:'success',
-                showConfirmButton: false,
-                timer: 1500,
-                ruta: 'products'
-              })
-              res.end()
-            }
-            else{
-              req.session.loggedin = true;
-              req.session.name = "admin";
-              req.session.id = _id;
-              res.render('home', {
-                alert: true,
-                alertTitle: "Conexión exitosa",
-                alertMessage: "¡LOGIN CORRECTO!",
-                alertIcon:'success',
-                showConfirmButton: false,
-                timer: 1500,
-                ruta: 'products'
-              })
-            }
-            res.end();
-          })
-        }
-    })
-  });
+  ...
 };
 controller.loguear = (req, res) => {
-  res.render('login');
+  ...
 };
 
 controller.logout = function (req, res) {
-  req.session = null;
-  res.redirect('/')
+  ...
 }
 
 module.exports = controller;
@@ -994,4 +692,151 @@ const myConnection = require('express-myconnection');
 const dotenv = require('dotenv');
 const session = require('cookie-session');
 const cors = require('cors');
+```
+
+# Principios SOLID aplicados
+
+## Principio Abierto/Cerrado
+
+Como dijo Bertrand Meyer, "las entidades de software (clases, módulos, funciones, etc) deben ser abiertas para ser extendidas, pero cerradas para modificarlas." ¿Qué significa esto? Este principio establece básicamente que puedes permitir a los usuarios agregar nuevas funcionalidades pero sin cambiar el código existente.
+
+```javascript
+const express = require('express');
+
+const administradorRouter = require('./administradorService.js');
+const eventoRouter = require('./eventoService.js');
+const ponenteRouter = require('./ponenteService.js');
+const usuarioRouter = require('./usuarioService.js');
+const authenticationRouter = require('./authentication.router.js')
+
+function routerApi(app) {
+  const router = express.Router();
+  app.use('', router);
+  router.use('/authentication',authenticationRouter)
+  router.use('/administrador', administradorRouter);
+  router.use('/evento', eventoRouter);
+  router.use('/ponente', ponenteRouter);
+  router.use('/usuario', usuarioRouter);
+}
+
+module.exports = routerApi;
+
+```
+Para agregar un nuevo router solo se deberia crear un archivo, y arreglo en el router Api
+
+## Principio de la segregacion de interfaz
+“Haz interfaces que sean específicas para un tipo de cliente”, es decir, para una finalidad concreta.
+
+En este sentido, según el Interface Segregation Principle (ISP), es preferible contar con muchas interfaces que definan pocos métodos que tener una interface forzada a implementar muchos métodos a los que no dará uso.
+
+Para insertar evento
+```html
+<%- include ('partials/_header')  %>
+    <section class="container">
+        <div class="row mt-5">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="form-group">
+                                <input type="text" placeholder="Nombre" name="nombre" class="form-control" required/>
+                            </div>
+                            <div class="form-group">
+                              <input type="text" placeholder="Fecha" name="Fecha" class="form-control" required/>
+                            </div>
+                            <div class="form-group">
+                              <input type="text" placeholder="Hora" name="hora" class="form-control" required/>
+                            </div>
+                            <div class="form-group">
+                              <input type="text" placeholder="lugar" name="lugar" class="form-control" required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include ('partials/_footer')  %>
+
+```
+Para mostrar eventos
+```html
+<%- include ('partials/_header') %>
+<section class="container">
+  <div class="row mt-5">
+      <div class="col-md-7">
+          <table class="table table-bordered table-hover">
+              <thead>
+                  <tr>
+                      <td>N°</td>
+                      <td>Nombre</td>
+                      <td>Fecha</td>
+                      <td>Hora</td>
+                      <td>Lugar</td>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  <% if (data) { %>
+                      <% for(var i = 0; i < data.length; i++) { %>
+                          <tr>
+                              <td>
+                                  <%= i+1 %>
+                              </td>
+                              <td>
+                                  <%= data[i].nombre %>
+                              </td>
+                              <td>
+                                <%= data[i].fecha %>
+                            </td>
+                              <td>
+                                <%= data[i].hora %>
+                              </td>
+                              <td>
+                                <%= data[i].lugar %>
+                              </td>
+                          </tr>
+                      <% } %>
+                  <% } %>
+
+
+              </tbody>
+          </table>
+      </div>
+  </div>
+</section>
+<%- include ('partials/_footer')  %>
+```
+
+## Principio de la inversión de dependencia
+
+Este principio establece dos cosas esenciales:
+
+Los módulos de alto nivel no deben depender de los de bajo nivel. Ambos deben depender de abstracciones.
+Las abstracciones no deben depender de detalles. Los detalles deben depender de abstracciones.
+```javascript
+//bad
+
+class Usuario{
+  constructor(nombre,apellido,nombreUsuario,contraseña)
+}
+
+class Administrador{
+  constructor(nombre,apellido,telefono,nombreUsuario,contraseña)
+}
+
+//good
+class Persona{
+  constructor(nombre,apellido,nombreUsuario,contraseña)
+}
+
+class Usuario{
+  constructor(Persona)
+}
+
+class Administrador{
+  constructor(Persona,telefono)
+}
+
 ```

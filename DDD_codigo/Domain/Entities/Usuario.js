@@ -1,10 +1,10 @@
 
 class Usuario{
-    constructor(nombre,apellido,nombreUsuario,contraseña){
-        this.nombre=nombre;
-        this.apellido=apellido;
-        this.nombreUsuario=nombreUsuario;
-        this.contraseña=contraseña;
+    constructor(Persona){
+        this.nombre=persona.nombre;
+        this.apellido=persona.apellido;
+        this.nombreUsuario=persona.nombreUsuario;
+        this.contraseña=persona.contraseña;
     }
     
     obtenerNombre(){
