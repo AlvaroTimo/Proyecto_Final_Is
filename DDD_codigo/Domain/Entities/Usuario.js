@@ -1,9 +1,8 @@
 
-class Administrador{
+class Usuario{
     constructor(nombre,apellido,nombreUsuario,contraseña){
         this.nombre=nombre;
         this.apellido=apellido;
-        this.telefono=telefono;
         this.nombreUsuario=nombreUsuario;
         this.contraseña=contraseña;
     }
